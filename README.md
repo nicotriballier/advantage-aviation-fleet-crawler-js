@@ -163,9 +163,13 @@ vercel
    - Cron job runs daily at 6 AM UTC
    - No manual intervention needed!
 
-## 🔄 Migration from Python
+## Note about the Vercel deployment
 
-This project was migrated from Python to JavaScript for better Vercel integration and serverless deployment capabilities.
+This is a function only, with no output. To avoid a Vercel deployment issue, make sure you use that build command:
+
+```bash
+mkdir public && echo '<!DOCTYPE html><html><body>API Only</body></html>' > public/index.html
+```
 
 ## 📝 License
 
