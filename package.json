@@ -1,0 +1,32 @@
+{
+  "name": "advantage-aviation-fleet-crawler-js",
+  "version": "1.0.0",
+  "description": "JavaScript web scraper to extract Cessna 172 G-1000 aircraft details from Advantage Aviation rental fleet website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "node crawler/scrape.js",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "web-scraper",
+    "aviation",
+    "cessna",
+    "vercel",
+    "cron"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
