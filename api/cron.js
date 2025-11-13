@@ -1,14 +1,16 @@
 /**
  * Vercel Cron Job endpoint for updating fleet data
  * This endpoint is called by Vercel's cron scheduler
- * Updates the public JSON file at /crawler/cessna_172_g1000_fleet.json
+ * Updates both the local JSON file and Vercel Blob storage
  */
 
 import { scrapeFleet } from '../lib/scraper.js';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
+import { put } from '@vercel/blob';
 
 const FLEET_DATA_PATH = join(process.cwd(), 'public', 'cessna_172_g1000_fleet.json');
+const BLOB_FILENAME = 'cessna_172_g1000_fleet.json';
 
 export default async function handler(req, res) {
     // Verify this is a cron request (Vercel adds this header)
@@ -20,18 +22,31 @@ export default async function handler(req, res) {
     
     try {
         console.log('Starting scheduled fleet data update...');
-        
+
         // Run the scraper
         const fleetData = await scrapeFleet();
-        
-        // Save the updated data
-        await writeFile(FLEET_DATA_PATH, JSON.stringify(fleetData, null, 2));
-        
+        const jsonData = JSON.stringify(fleetData, null, 2);
+
+        // Save the updated data locally (for backup/debugging)
+        await writeFile(FLEET_DATA_PATH, jsonData);
+        console.log('Local file updated successfully');
+
+        // Upload to Vercel Blob storage
+        const blob = await put(BLOB_FILENAME, jsonData, {
+            access: 'public',
+            contentType: 'application/json',
+            allowOverwrite: true,
+        });
+
+        console.log('Blob storage updated successfully:', blob.url);
+
         const response = {
             success: true,
             timestamp: new Date().toISOString(),
             count: Object.keys(fleetData).length,
-            message: 'Fleet data updated successfully via cron job'
+            message: 'Fleet data updated successfully via cron job',
+            blobUrl: blob.url,
+            localPath: FLEET_DATA_PATH
         };
 
         console.log('Cron job completed successfully:', response);

@@ -10,24 +10,5 @@
       "path": "/api/cron",
       "schedule": "0 6 * * *"
     }
-  ],
-  "headers": [
-    {
-      "source": "/cessna_172_g1000_fleet.json",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
-    }
   ]
 }

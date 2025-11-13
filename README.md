@@ -27,7 +27,18 @@ npm start
 
 # Start development server
 npm run dev
+
+# Test cron job locally (requires .env.local with BLOB_READ_WRITE_TOKEN)
+npm run test-cron
 ```
+
+## 🔧 How it works
+
+1. **Web Scraping**: Uses Puppeteer to navigate the Advantage Aviation website
+2. **Data Extraction**: Extracts aircraft details including tail numbers, prices, and years
+3. **Local Storage**: Saves results to `public/cessna_172_g1000_fleet.json`
+4. **Blob Upload**: Uploads the JSON file to Vercel Blob storage at `https://54cbtlnmz1w1zpur.public.blob.vercel-storage.com/cessna_172_g1000_fleet.json`
+5. **Automated Updates**: Vercel cron job runs daily at 6 AM UTC to update both local and blob storage
 
 ### Deploy to Vercel
 
@@ -38,6 +49,39 @@ npm install -g vercel
 # Deploy
 vercel
 ```
+
+### Environment Variables
+
+You need to set the following environment variable in your Vercel project:
+
+- **`BLOB_READ_WRITE_TOKEN`** - Your Vercel Blob storage token for uploading files
+
+Set this in your Vercel dashboard under Project Settings → Environment Variables.
+
+### Local Testing with Blob Storage
+
+To test the Blob storage upload locally:
+
+1. **Create `.env.local` file** (already created for you):
+   ```bash
+   BLOB_READ_WRITE_TOKEN=your_actual_token_here
+   ```
+
+2. **Get your Blob token** from Vercel dashboard:
+   - Go to your project → Settings → Storage → Blob
+   - Copy the read/write token
+
+3. **Test the cron job**:
+   ```bash
+   npm run test-cron
+   ```
+
+4. **Test the scraper**:
+   ```bash
+   npm start
+   ```
+
+Both commands will upload to your Blob storage if the token is configured correctly.
 
 ## 🔄 Automated Updates
 
