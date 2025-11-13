@@ -169,4 +169,4 @@ This project was migrated from Python to JavaScript for better Vercel integratio
 
 ## 📝 License
 
-This project is for educational and personal use only.
+This project is for educational and personal use only...
