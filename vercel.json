@@ -2,14 +2,11 @@
   "version": 2,
   "functions": {
     "api/cron.js": {
-      "runtime": "nodejs22.x",
+      "runtime": "nodejs20.x",
       "maxDuration": 300
     }
   },
   "crons": [
-    {
-      "path": "/api/cron",
-      "schedule": "0 6 * * *"
-    }
+    { "path": "/api/cron", "schedule": "0 6 * * *" }
   ]
 }
